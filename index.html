@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exclusive Party Registration</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <main class="form-container">
+            <header>
+                <h1>Join the Party</h1>
+                <p>Register for our exclusive event and get ready for a night to remember.</p>
+            </header>
+
+            <form id="registrationForm" action="https://formspree.io/f/meozoygq" method="POST" novalidate>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                    <div class="error-message" id="nameError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter a valid 10-digit number" required>
+                    <div class="error-message" id="phoneError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="rollNumber">Roll Number</label>
+                    <input type="text" id="rollNumber" name="rollNumber" placeholder="Enter your roll number" required>
+                    <div class="error-message" id="rollNumberError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Do you want drinks?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="drinks" value="yes"> Yes</label>
+                        <label><input type="radio" name="drinks" value="no" checked> No</label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="drinkChoiceGroup" style="display: none;">
+                    <label for="drinkChoice">Your Drink Choice</label>
+                    <textarea id="drinkChoice" name="drinkChoice" placeholder="e.g., Mojito, Cola, etc."></textarea>
+                    <div class="error-message" id="drinkChoiceError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="suggestions">Suggestions (Optional)</label>
+                    <textarea id="suggestions" name="suggestions" placeholder="Help us make the party better!"></textarea>
+                </div>
+
+                <button type="submit">Register Now</button>
+            </form>
+        </main>
+
+        <aside class="hero-image-container">
+            <!-- You can replace this URL with your own image -->
+            <img src="https://images.unsplash.com/photo-1527236438218-d82077ae1f85?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="A lively party scene with people dancing and confetti.">
+        </aside>
+    </div>
+
+    <footer>
+        <p>We can't wait to see you at the party!</p>
+    </footer>
+
+    <!-- Pop-up Modals -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeSuccess">&times;</span>
+            <h2>Success!</h2>
+            <p>Your registration was successful! See you there.</p>
+        </div>
+    </div>
+
+    <div id="errorModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeError">&times;</span>
+            <h2>Oops!</h2>
+            <p>Something went wrong. Please try again later.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

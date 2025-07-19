@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Party Registration</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-size: 1rem;
+        }
+
+        input, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #6c63ff;
+        }
+
+        button {
+            background-color: #6c63ff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        button:hover {
+            background-color: #5a53d1;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Error messages */
+        .error {
+            color: red;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Party Registration</h1>
+    <form id="party-form" action="https://formspree.io/f/meozoygq" method="POST">
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <div id="name-error" class="error hidden">Please enter your name.</div>
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" required pattern="\d{10}">
+        <div id="phone-error" class="error hidden">Please enter a valid phone number (10 digits).</div>
+
+        <label for="roll">Roll Number:</label>
+        <input type="text" id="roll" name="roll" required>
+        <div id="roll-error" class="error hidden">Please enter your roll number.</div>
+
+        <label for="drinks">Do you want drinks?</label>
+        <input type="radio" id="yes" name="drinks" value="yes"> Yes
+        <input type="radio" id="no" name="drinks" value="no" checked> No
+        
+        <div id="drink-input" class="hidden">
+            <label for="drink">Please specify your drink:</label>
+            <input type="text" id="drink" name="drink">
+        </div>
+
+        <label for="suggestions">Suggestions (Optional):</label>
+        <textarea id="suggestions" name="suggestions"></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- Success/Error Popups -->
+    <div id="popup" class="hidden">
+        <div id="popup-message"></div>
+        <button onclick="closePopup()">Close</button>
+    </div>
+</div>
+
+<script>
+    // Show/hide drink input based on selection
+    const drinksRadios = document.querySelectorAll('input[name="drinks"]');
+    const drinkInput = document.getElementById('drink-input');
+    drinksRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            if (this.value === 'yes') {
+                drinkInput.classList.remove('hidden');
+            } else {
+                drinkInput.classList.add('hidden');
+            }
+        });
+    });
+
+    // Form Validation
+    const form = document.getElementById('party-form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Clear previous error messages
+        const errors = document.querySelectorAll('.error');
+        errors.forEach(error => error.classList.add('hidden'));
+
+        let isValid = true;
+
+        const name = document.getElementById('name');
+        if (name.value.trim() === "") {
+            document.getElementById('name-error').classList.remove('hidden');
+            isValid = false;
+        }
+
+        const phone = document.getElementById('phone');
+        const phonePattern = /^\d{10}$/;
+        if (!phonePattern.test(phone.value)) {
+            document.getElementById('phone-error').classList.remove('hidden');
+            isValid = false;
+        }
+
+        const roll = document.getElementById('roll');
+        if (roll.value.trim() === "") {
+            document.getElementById('roll-error').classList.remove('hidden');
+            isValid = false;
+        }
+
+        if (isValid) {
+            form.submit();
+        } else {
+            showPopup('Please fix the errors and try again.');
+        }
+    });
+
+    // Popup handling
+    function showPopup(message) {
+        const popup = document.getElementById('popup');
+        document.getElementById('popup-message').textContent = message;
+        popup.classList.remove('hidden');
+    }
+
+    function closePopup() {
+        document.getElementById('popup').classList.add('hidden');
+    }
+</script>
+
+</body>
